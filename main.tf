@@ -109,6 +109,15 @@ resource "aws_route_table" "database" {
   )
 } 
 
+resource "aws_db_subnet_group" "default" {
+  name       = "${local.name}"
+  subnet_ids = aws_subnet.database[*].id 
+
+  tags = {
+    Name = "${local.name}"
+  }
+}
+
 #igw route added in public rtb
 resource "aws_route" "public_route" {
   route_table_id            = aws_route_table.public.id
