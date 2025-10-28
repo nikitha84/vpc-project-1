@@ -1,6 +1,7 @@
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
   instance_tenancy = "default"
+   enable_dns_support = "true"
   enable_dns_hostnames = "true"
 
   tags = merge(var.common_tags,
@@ -109,14 +110,14 @@ resource "aws_route_table" "database" {
   )
 } 
 
-resource "aws_db_subnet_group" "default" {
-  name       = "${local.name}"
-  subnet_ids = aws_subnet.database[*].id 
+# resource "aws_db_subnet_group" "default" {
+#   name       = "${local.name}"
+#   subnet_ids = aws_subnet.database[*].id 
 
-  tags = {
-    Name = "${local.name}"
-  }
-}
+#   tags = {
+#     Name = "${local.name}"
+#   }
+# }
 
 #igw route added in public rtb
 resource "aws_route" "public_route" {
